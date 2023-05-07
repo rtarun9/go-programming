@@ -3,18 +3,30 @@ package main
 import "fmt"
 
 func main() {
+	message := make(chan int, 3)
 
-	// Create a channel. The expected data type that will travel through the channel is 'string'.
-	messages := make(chan string)
+	go func() {
+		// Send to channel.
+		message <- 1
+	}()
 
-	// Inline function.
-	go func(msg string) {
-		// Send the value of "ping" through the channel, reciever is blocked until the value is recieved.
-		messages <- "ping"
-		fmt.Println(msg)
-	}("In func")
+	go func() {
+		// Send to channel.
+		message <- 2
+	}()
 
-	// Explicit lock, untill the data is recieved by the reciever.
-	msg := <-messages
-	fmt.Println(msg)
+	go func() {
+		// Send to channel.
+		message <- 3
+	}()
+
+	var msg int = <-message
+	fmt.Printf("Message received from go-routine :: %d.\n", msg)
+
+	msg = <-message
+	fmt.Printf("Message received from go-routine :: %d.\n", msg)
+
+	msg = <-message
+	fmt.Printf("Message received from go-routine :: %d.\n", msg)
+
 }

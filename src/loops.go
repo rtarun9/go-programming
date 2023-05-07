@@ -9,4 +9,8 @@ func main() {
 		}
 		fmt.Printf("%d", i)
 	}
+
+	for j := 1; j < 10; j = j * 2 {
+		fmt.Printf("%f ", (float32)(j))
+	}
 }
