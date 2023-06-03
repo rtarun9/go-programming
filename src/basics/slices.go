@@ -18,5 +18,9 @@ func main() {
 	// a slice.
 	var b []int = []int{3, 2, 1}
 	b = append(b, 111, 222, 333, 444, 555)
+	var c []int = []int{1, 2, 3}
+	c = append(c, b)
+
 	display(b)
+	display(c)
 }

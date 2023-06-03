@@ -3,11 +3,14 @@ package main
 import (
 	"fmt"
 	"sync"
+	"time"
 )
 
 func main() {
-	ch := make(chan int, 9)
+	ch := make(chan int, 10)
 	var wg sync.WaitGroup
+
+	wg.Add(1)
 
 	go func() {
 		// Sender process.
@@ -27,14 +30,16 @@ func main() {
 			case ch <- a:
 				b = temp
 			default:
-				ch <- -1
+				wg.Done()
+				fmt.Print("SENDER IS DONE")
 				break sender_loop
 			}
 		}
 	}()
 
+	time.Sleep(time.Second * 1)
+	wg.Wait()
 	wg.Add(1)
-
 	go func() {
 		// Reader process
 
@@ -44,11 +49,11 @@ func main() {
 
 			select {
 			case fib = <-ch:
-				if fib == -1 {
-					wg.Done()
-					break receiver_loop
-				}
 				fmt.Printf("%d ", fib)
+				fmt.Println(len(ch))
+			default:
+				wg.Done()
+				break receiver_loop
 			}
 		}
 	}()

@@ -1,14 +1,14 @@
 package main
 
 import (
-	"time"
-	"net"
-	"net/rpc"
-	"net/http"
 	"log"
+	"net"
+	"net/http"
+	"net/rpc"
+	"time"
 )
 
-type Args struct {}
+type Args struct{}
 
 type TimeServer int64
 
@@ -26,7 +26,7 @@ func main() {
 	http.Serve(list, nil)
 }
 
-func (t* TimeServer) GiveServerTime(args *Args, reply *int64) error {
+func (t *TimeServer) GiveServerTime(args *Args, reply *int64) error {
 	*reply = time.Now().Unix()
 	return nil
 
