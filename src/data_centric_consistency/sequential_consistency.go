@@ -95,7 +95,10 @@ func main() {
 			process.X.Value = 1
 			process.CurrentTime = 1
 
-			datastore.Mutex.Lock()
+			for !datastore.Mutex.TryLock() {
+				process.CurrentTime += 1
+			}
+
 			// Get the value of Y and Z.
 			if process.CurrentTime < datastore.Y.LastUpdationTime {
 				process.Y = datastore.Y
@@ -121,7 +124,10 @@ func main() {
 			process.CurrentTime = 1
 
 			// Get the value of X and Z.
-			datastore.Mutex.Lock()
+			for !datastore.Mutex.TryLock() {
+				process.CurrentTime += 1
+			}
+
 			if process.CurrentTime < datastore.X.LastUpdationTime {
 				process.X = datastore.X
 			}
@@ -146,7 +152,10 @@ func main() {
 			process.CurrentTime = 1
 
 			// Get the value of X and Y.
-			datastore.Mutex.Lock()
+			for !datastore.Mutex.TryLock() {
+				process.CurrentTime += 1
+			}
+
 			if process.CurrentTime < datastore.X.LastUpdationTime {
 				process.X = datastore.X
 			}
