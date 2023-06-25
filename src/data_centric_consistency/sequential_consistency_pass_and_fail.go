@@ -101,11 +101,13 @@ func main() {
 				process.CurrentTime += 1
 			}
 
+			fmt.Printf("1 :: %d.\n", process.CurrentTime)
+
 			// Get the value of Y and Z.
-			if process.CurrentTime < datastore.Y.LastUpdationTime {
+			if process.CurrentTime >= datastore.Y.LastUpdationTime {
 				process.Y = datastore.Y
 			}
-			if i < 4 && process.CurrentTime < datastore.Z.LastUpdationTime {
+			if i < 4 && process.CurrentTime >= datastore.Z.LastUpdationTime {
 				process.Z = datastore.Z
 			}
 
@@ -113,7 +115,7 @@ func main() {
 			process.X.LastUpdationTime = process.CurrentTime
 
 			datastore.X = process.X
-			output += fmt.Sprintf("[From Processes with ID :: %d at local time :: %d] Y = %d, Z = %d.\n", process.PID, process.CurrentTime, process.Y.Value, process.Z.Value)
+			output += fmt.Sprintf("[From Processes with ID :: %d at local time :: %d] Y = %d, Z = %d. X now equals = %d.\n", process.PID, process.CurrentTime, process.Y.Value, process.Z.Value, process.X.Value)
 			datastore.Mutex.Unlock()
 
 			// Update last updated value of X in datastore.
@@ -130,10 +132,12 @@ func main() {
 				process.CurrentTime += 1
 			}
 
-			if process.CurrentTime < datastore.X.LastUpdationTime {
+			fmt.Printf("2 :: %d.\n", process.CurrentTime)
+
+			if process.CurrentTime >= datastore.X.LastUpdationTime {
 				process.X = datastore.X
 			}
-			if i < 4 && process.CurrentTime < datastore.Z.LastUpdationTime {
+			if i < 4 && process.CurrentTime >= datastore.Z.LastUpdationTime {
 				process.Z = datastore.Z
 			}
 
@@ -141,7 +145,7 @@ func main() {
 			process.Y.LastUpdationTime = process.CurrentTime
 
 			datastore.Y = process.Y
-			output += fmt.Sprintf("[From Processes with ID :: %d at local time :: %d] X = %d, Z = %d.\n", process.PID, process.CurrentTime, process.X.Value, process.Z.Value)
+			output += fmt.Sprintf("[From Processes with ID :: %d at local time :: %d] X = %d, Z = %d. Y now equals = %d.\n", process.PID, process.CurrentTime, process.X.Value, process.Z.Value, process.Y.Value)
 			datastore.Mutex.Unlock()
 
 			// Update last updated value of X in datastore.
@@ -158,10 +162,12 @@ func main() {
 				process.CurrentTime += 1
 			}
 
-			if process.CurrentTime < datastore.X.LastUpdationTime {
+			fmt.Printf("3 :: %d.\n", process.CurrentTime)
+
+			if process.CurrentTime >= datastore.X.LastUpdationTime {
 				process.X = datastore.X
 			}
-			if i < 4 && process.CurrentTime < datastore.Y.LastUpdationTime {
+			if i < 4 && process.CurrentTime >= datastore.Y.LastUpdationTime {
 				process.Y = datastore.Y
 			}
 
@@ -169,7 +175,7 @@ func main() {
 			process.Z.LastUpdationTime = process.CurrentTime
 			datastore.Z = process.Z
 
-			output += fmt.Sprintf("[From Processes with ID :: %d at local time :: %d] X = %d, Y = %d.\n", process.PID, process.CurrentTime, process.X.Value, process.Y.Value)
+			output += fmt.Sprintf("[From Processes with ID :: %d at local time :: %d] X = %d, Y = %d. Z now equals = %d.\n", process.PID, process.CurrentTime, process.X.Value, process.Y.Value, process.Z.Value)
 			datastore.Mutex.Unlock()
 
 			// Update last updated value of X in datastore.
